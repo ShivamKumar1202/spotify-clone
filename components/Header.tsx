@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { RxCaretLeft } from "react-icons/rx";
 import { RxCaretRight } from "react-icons/rx";
@@ -12,6 +12,7 @@ import { useUser } from "@/hooks/useUser";
 import { FaUserAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import usePlayer from "@/hooks/usePlayer";
+import { useRouter } from "next/router";
 
 
 interface HeaderProps{
@@ -31,16 +32,22 @@ const Header: React.FC<HeaderProps> = (
 
         const { user } = useUser();
         const player = usePlayer();
-
+        const pathname = usePathname();
+        
         const handleLogin = async () =>{
             authModal.onOpen();
             // TODO : Make a toast.success('Logged In!'); after a successful login
             // if(user)
             // {
             //     toast.success('Logged In!');
-            // }
-            
-           
+            // }  
+        }
+
+        const onMobileHomeClick = () =>{
+            router.push('/');
+        }
+        const onMobileSearchClick = () =>{
+            router.push('/search');
         }
 
         const handleLogout = async () => {
@@ -112,29 +119,35 @@ const Header: React.FC<HeaderProps> = (
 
                 </div>
                 <div className="flex md:hidden gap-x-2 items-center">
-                    <button className="
-                    rounded-full
-                    p-1
-                    flex
-                    bg-white
-                    items-center
-                    justify-center
-                    hover:opacity-75
-                    transition
-                    ">
+                    <button 
+                    onClick = {onMobileHomeClick}
+                    className="
+                        rounded-full
+                        p-1
+                        flex
+                        bg-white
+                        items-center
+                        justify-center
+                        hover:opacity-75
+                        transition
+                        "
+                    >
                         <HiHome className="text-black" size = {20} />
                     </button>
 
-                    <button className="
-                    rounded-full
-                    p-1
-                    flex
-                    bg-white
-                    items-center
-                    justify-center
-                    hover:opacity-75
-                    transition
-                    ">
+                    <button 
+                        onClick = {onMobileSearchClick}                    
+                        className="
+                        rounded-full
+                        p-1
+                        flex
+                        bg-white
+                        items-center
+                        justify-center
+                        hover:opacity-75
+                        transition
+                        "
+                    >
                         <BiSearch className="text-black" size = {20} />
                     </button>
                 </div>
